@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://absolute-timer.vercel.app/sitemap.xml
