@@ -70,7 +70,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
         {/* OG IMAGE (forzar carga si no se detecta) */}
-        <meta property="og:image" content={`${SITE_URL}/og_preview.webp`} />
+        <meta property="og:image" content={`${SITE_URL}/og-preview.webp`} />
       </head>
 
       <body
