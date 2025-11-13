@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import Navbar from "@/components/shared/navBar";
 
 // Fuentes
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -76,6 +77,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-b from-gray-950 to-gray-800 flex flex-col`}
       >
+        <Navbar/>
         <header className="text-center py-10">
           <h1 className="text-4xl font-extrabold text-white tracking-wide font-gotham">
             Absolute Timer
@@ -92,8 +94,8 @@ export default function RootLayout({
         <footer className="text-center text-gray-500 py-4 border-t border-gray-700 text-sm">
           <p className="max-w-4xl mx-auto px-4">
             © {new Date().getFullYear()} Absolute Timer — By{" "}
-            <span className="text-gray-300">Jhon Mario Durango Rodríguez</span>
-            <a href="/privacy-policy" className="text-gray-300 hover:underline ml-4">
+            <span className="text-gray-300">Jhon Mario Durango </span>
+            <a href="/policy" className="text-gray-300 hover:underline ml-4">
               Privacy Policy
             </a>
           </p>
