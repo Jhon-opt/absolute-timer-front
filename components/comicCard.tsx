@@ -37,46 +37,70 @@ export const ComicCard: React.FC<ComicCardProps> = ({ comic }) => {
   return colors[index];
 }, [comic.id]);
 
+const formatReleaseDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const year = date.getUTCFullYear();
+  const month = date.getUTCMonth();
+  const day = date.getUTCDate();
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  return `${months[month]} ${day}, ${year}`;
+};
+
+
 
   return (
-    <div className="bg-gray-900 text-white rounded-2xl overflow-hidden shadow-lg flex flex-col items-center p-4 w-72 hover:scale-105 transition-transform duration-300">
-      {/* 🖼️ Portada optimizada */}
-      <div className="relative w-full h-96">
-        <Image
-          src={comic.coverImage}
-          alt={comic.title}
-          fill
-          className="object-cover rounded-xl"
-          priority={true}
-          sizes="(max-width: 768px) 100vw, 33vw"
+  <div className="bg-gray-900 text-white rounded-2xl overflow-hidden shadow-lg flex flex-col items-center p-4 w-72 hover:scale-105 transition-transform duration-300">
+    {/* PORTADA */}
+    <div className="relative w-full h-96">
+      <Image
+        src={comic.coverImage}
+        alt={`${comic.title} #${latestIssue?.number} cover`}
+        fill
+        className="object-cover rounded-xl"
+        priority={true}
+        sizes="(max-width: 768px) 100vw, 33vw"
+      />
+    </div>
+
+    {/* TÍTULO */}
+    <h2 className="text-xl font-bold mt-4 text-center">
+      {comic.title} #{latestIssue?.number}
+    </h2>
+
+    {/* SUBTÍTULO */}
+    <p className="text-sm text-gray-400 italic text-center">
+      {latestIssue?.name}
+    </p>
+
+    {/* FECHA → PRIMERO */}
+    {latestIssue && (
+      <p className="text-sm font-bold mt-2">
+        <strong>Release Date:</strong> {formatReleaseDate(latestIssue.releaseDate)}
+      </p>
+    )}
+
+    {/* BARRA DE PROGRESO */}
+    <div className="w-full flex items-center gap-2 mt-3">
+      <div className="flex-1 bg-gray-700 rounded-full h-3 overflow-hidden">
+        <div
+          className={`${randomColor} h-3 transition-all duration-500`}
+          style={{ width: `${progress}%` }}
         />
       </div>
-
-      <h2 className="text-xl font-bold mt-4 text-center ">
-        {comic.title} #{latestIssue?.number}
-      </h2>
-
-      <p className="text-sm text-gray-400 italic text-center">
-        {latestIssue?.name}
-      </p>
-
-      {/* 🔵 Barra de progreso con número */}
-      <div className="w-full flex items-center gap-2 mt-4">
-        <div className="flex-1 bg-gray-700 rounded-full h-3 overflow-hidden">
-          <div
-            className={`${randomColor} h-3 transition-all duration-500`}
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        <span className="text-sm text-gray-300 w-10 text-right">
-          {Math.floor(progress)}%
-        </span>
-      </div>
-
-      {/* ⏰ Temporizador */}
-      <div className="mt-3">
-        {latestIssue && <CountdownTimer targetDate={latestIssue.releaseDate} />}
-      </div>
+      <span className="text-sm text-gray-300 w-10 text-right">
+        {Math.floor(progress)}%
+      </span>
     </div>
-  );
+
+    
+    <div className="mt-3">
+      {latestIssue && <CountdownTimer targetDate={latestIssue.releaseDate} />}
+    </div>
+  </div>
+);
 };
