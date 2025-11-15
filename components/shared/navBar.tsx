@@ -56,7 +56,7 @@ export default function Navbar() {
             <Link href="/about" className="block text-gray-300 hover:text-white py-2" onClick={() => setMobileMenuOpen(false)}>
               About
             </Link>
-            <Link href="/privacy-policy" className="block text-gray-300 hover:text-white py-2" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/policy" className="block text-gray-300 hover:text-white py-2" onClick={() => setMobileMenuOpen(false)}>
               Privacy Policy
             </Link>
           </div>
