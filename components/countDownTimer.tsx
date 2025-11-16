@@ -17,7 +17,7 @@ export const CountdownTimer: React.FC<CountdownProps> = ({ targetDate }) => {
   if (isReleased) {
     return (
       <div className="text-green-400 font-semibold text-lg mt-2">
-        ¡Ya disponible! 🎉
+        Now available!!!
       </div>
     );
   }
