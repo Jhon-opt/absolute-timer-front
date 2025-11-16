@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import Navbar from "@/components/shared/navBar";
@@ -72,6 +73,8 @@ export default function RootLayout({
 
         {/* OG IMAGE (forzar carga si no se detecta) */}
         <meta property="og:image" content={`${SITE_URL}/og-preview.webp`} />
+        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8570250065184709"
+     crossOrigin="anonymous"></Script>
       </head>
 
       <body
