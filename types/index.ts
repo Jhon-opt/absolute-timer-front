@@ -3,6 +3,8 @@ export interface Issue {
   name: string;
   releaseDate: string;       // Próximo número
   lastReleaseDate?: string;  // Último número lanzado (opcional)
+  authors?: string[];
+  synopsis?: string;
 }
 
 export interface EventData {
@@ -10,4 +12,5 @@ export interface EventData {
   title: string;
   coverImage: string;
   issues: Issue[];
+  
 }

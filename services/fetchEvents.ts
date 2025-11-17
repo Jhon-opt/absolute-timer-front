@@ -17,4 +17,5 @@ export async function fetchEvents(): Promise<EventData[]> {
 
   const data = (await response.json()) as EventData[];
   return data;
+  
 }

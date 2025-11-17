@@ -6,6 +6,7 @@ import Image from "next/image"; // ✅ usamos el componente optimizado de Next
 import type { EventData, Issue } from "@/types";
 import { useProgress } from "@/hooks/useProgress";
 import { CountdownTimer } from "./countDownTimer";
+import Link from "next/link";
 
 interface ComicCardProps {
   comic: EventData;
@@ -17,6 +18,7 @@ export const ComicCard: React.FC<ComicCardProps> = ({ comic }) => {
     latestIssue?.releaseDate,
     latestIssue?.lastReleaseDate
   );
+  const authors = latestIssue?.authors ?? [];
 
   // 🎨 Color aleatorio (se genera una vez por cómic)
   const randomColor = useMemo(() => {
@@ -54,7 +56,8 @@ const formatReleaseDate = (dateString: string) => {
 
 
   return (
-  <div className="bg-gray-900 text-white rounded-2xl overflow-hidden shadow-lg flex flex-col items-center p-4 w-72 hover:scale-105 transition-transform duration-300">
+     <Link href={`/comic/${comic.id}`} className="w-72">
+      <div className="bg-gray-900 text-white rounded-2xl overflow-hidden shadow-lg flex flex-col items-center p-4 w-72 hover:scale-105 transition-transform duration-300">
     {/* PORTADA */}
     <div className="relative w-full h-96">
       <Image
@@ -73,9 +76,8 @@ const formatReleaseDate = (dateString: string) => {
     </h2>
 
     {/* SUBTÍTULO */}
-    <p className="text-sm text-gray-400 italic text-center">
-      {latestIssue?.name}
-    </p>
+    
+    <p className="text-sm text-gray-400 italic text-center">{authors.join(", ")}</p>
 
     {/* FECHA → PRIMERO */}
     {latestIssue && (
@@ -102,5 +104,7 @@ const formatReleaseDate = (dateString: string) => {
       {latestIssue && <CountdownTimer targetDate={latestIssue.releaseDate} />}
     </div>
   </div>
+     </Link>
+  
 );
 };
