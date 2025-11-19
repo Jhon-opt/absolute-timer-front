@@ -1,23 +1,36 @@
-"use client"; // 👈 Requerido: los hooks se ejecutan solo en el cliente
+"use client";
 
 import { useEffect, useState } from "react";
 
 export function useCountdown(targetDate: string) {
-  const countDownDate = new Date(targetDate).getTime();
+  const targetUTC = Date.parse(targetDate); // ya está en UTC por el "Z"
+
+  const getNowUTC = () => {
+    const now = new Date();
+    return Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate(),
+      now.getUTCHours(),
+      now.getUTCMinutes(),
+      now.getUTCSeconds(),
+      now.getUTCMilliseconds()
+    );
+  };
 
   const [countdown, setCountdown] = useState(() => {
-    const diff = countDownDate - Date.now();
-    return diff > 0 ? diff : 0; // 👈 evita valores negativos iniciales
+    const diff = targetUTC - getNowUTC();
+    return diff > 0 ? diff : 0;
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const diff = countDownDate - Date.now();
+      const diff = targetUTC - getNowUTC();
       setCountdown(diff > 0 ? diff : 0);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [countDownDate]);
+  }, [targetUTC]);
 
   const days = Math.floor(countdown / (1000 * 60 * 60 * 24));
   const hours = Math.floor(
