@@ -2,23 +2,8 @@ import { fetchEvents } from "@/services/fetchEvents";
 import Image from "next/image";
 import { CountdownTimer } from "@/components/countDownTimer";
 import type { Metadata } from "next";
-
-// 📌 Formato consistente de fecha (UTC)
-function formatReleaseDateUTC(dateString: string) {
-  const date = new Date(dateString);
-
-  const year = date.getUTCFullYear();
-  const month = date.getUTCMonth();
-  const day = date.getUTCDate();
-
-  const months = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
-  ];
-
-  return `${months[month]} ${day}, ${year}`;
-}
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 // ⭐ SEO DINÁMICO PARA CADA CÓMIC
 export async function generateMetadata(
   { params }: { params: Promise<{ id: string }> }
@@ -40,9 +25,9 @@ export async function generateMetadata(
 
   return {
     title: `${comic.title} #${latestIssue.number} – Release Countdown`,
-    description: `${comic.title} #${latestIssue.number} releases on ${formatReleaseDateUTC(
+    description: `${comic.title} #${latestIssue.number} releases on ${new Date(
       latestIssue.releaseDate
-    )}. Live countdown, cover and details.`,
+    ).toDateString()}. Live countdown, cover and details.`,
 
     openGraph: {
       title: `${comic.title} #${latestIssue.number} – Absolute Countdown`,
@@ -65,6 +50,7 @@ export default async function ComicPage({ params }: { params: Promise<{ id: stri
 
   const comics = await fetchEvents();
   const comic = comics.find((c) => c.id === Number(id));
+
 
   if (!comic) {
     return <div className="text-center text-white p-10">Comic not found</div>;
@@ -127,7 +113,12 @@ export default async function ComicPage({ params }: { params: Promise<{ id: stri
         <div className="text-lg text-gray-200">
           <span className="font-semibold text-purple-300">Release date:</span>
           <br />
-          {formatReleaseDateUTC(latestIssue.releaseDate)}
+          {new Date(latestIssue.releaseDate).toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </div>
 
         {/* COUNTDOWN */}
@@ -156,5 +147,6 @@ export default async function ComicPage({ params }: { params: Promise<{ id: stri
     </div>
   </div>
 </div>
+
   );
 }
