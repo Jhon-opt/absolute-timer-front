@@ -4,6 +4,7 @@ import { CountdownTimer } from "@/components/countDownTimer";
 import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const dynamicParams = true;
 // ⭐ SEO DINÁMICO PARA CADA CÓMIC
 export async function generateMetadata(
   props: { params: Promise<{ id: string }> }
