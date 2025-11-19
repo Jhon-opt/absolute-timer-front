@@ -6,9 +6,11 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 // ⭐ SEO DINÁMICO PARA CADA CÓMIC
 export async function generateMetadata(
-  { params }: { params: Promise<{ id: string }> }
+  props: { params: Promise<{ id: string }> }
 ): Promise<Metadata> {
-  const { id } = await params;
+
+  const { id } = await props.params; // ✅ CORRECTO
+
   const comics = await fetchEvents();
   const comic = comics.find((c) => c.id === Number(id));
 
@@ -45,8 +47,10 @@ export async function generateMetadata(
   };
 }
 
-export default async function ComicPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default async function ComicPage(
+  props: { params: Promise<{ id: string }> }
+) {
+  const { id } = await props.params; 
 
   const comics = await fetchEvents();
   const comic = comics.find((c) => c.id === Number(id));
